@@ -2,6 +2,7 @@ import React from "react";
 import LargeSizeLayout from "@/components/layout/LargeScreenContainer";
 import { CreateCollection } from "./components/CreateCollection";
 const page = () => {
+  
   return (
     <LargeSizeLayout>
       <div className="">

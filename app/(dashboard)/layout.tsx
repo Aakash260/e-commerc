@@ -7,6 +7,7 @@ import TopSideBar from "@/components/layout/TopSideBar";
 import MobileSideBar from "@/components/layout/MobileSideBar";
 import TanstackProvider from "@/utils/TanstackProvider";
 const inter = Inter({ subsets: ["latin"] });
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -31,12 +32,14 @@ export default function RootLayout({
               <LeftSideBar />
               <div className="">               
               {children}
+             
               </div>
             </div>
             </TanstackProvider>
           </div>
 
           </div>
+          <Toaster/>
         </body>
       </html>
     </ClerkProvider>

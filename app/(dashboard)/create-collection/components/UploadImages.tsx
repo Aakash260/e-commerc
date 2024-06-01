@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button';
 
 interface UploadImageProps {
     value:string[],
-    onChange:(url:string)=>void
-    onRemove:(url:string)=>void
+    onChange:(value:string)=>void
+    onRemove:(value:string)=>void
 }
 
 const UploadImages = ({value,onChange,onRemove}:UploadImageProps) => {
@@ -19,9 +19,8 @@ const UploadImages = ({value,onChange,onRemove}:UploadImageProps) => {
 
   return (
 
-    <CldUploadWidget uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME} onSuccess={onUpload}>
-  {({ open }) => {
-    return (
+  
+  
         <div className=''>
    <div className="mb-4 flex flex-wrap items-center gap-4">
         {value.map((url) => (
@@ -40,14 +39,19 @@ const UploadImages = ({value,onChange,onRemove}:UploadImageProps) => {
           </div>
         ))}
       </div>
-      <button className="bg-[#D2DAFF] p-2 rounded-sm" onClick={() => open()}>
-      +  Upload an Image
-      </button>
-        </div>
+ 
+      <CldUploadWidget uploadPreset="gzcnwsjd" onUpload={onUpload}>
+        {({ open }) => {
+          return (
+            <Button type="button" onClick={() => open()} className="bg-gray-400 text-white">
+              {/* <Plus className="h-4 w-4 mr-2" /> */}
+            +  Upload Image
+            </Button>
+          );
+        }}
+      </CldUploadWidget>
+    </div>
     );
-  }}
-</CldUploadWidget>
-  )
 }
 
 export default UploadImages
