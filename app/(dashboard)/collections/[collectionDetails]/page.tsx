@@ -19,8 +19,6 @@ const getSingleCollection=async()=>{
 }
     const {data,isPending} = useQuery({ queryKey: ['getSingleCollection'], 
     queryFn: getSingleCollection
-    
-
 }
  
 )

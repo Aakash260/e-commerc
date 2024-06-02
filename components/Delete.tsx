@@ -23,11 +23,13 @@ interface ErrorResponse {
   };
 }
 
-const Delete = ({ id }: { id: string }) => {
+const Delete = ({ id,item }: { id: string,item:string }) => {
+
   const queryClient = useQueryClient()
   const { toast } = useToast()
   const deleteCollection = async (collectionId: string) => {
-    const response = await axios.delete(`/api/collections/${collectionId}`);
+    const url= item==='products'?`/api/products/${collectionId}`:`/api/collections/${collectionId}`
+    const response = await axios.delete(url);
     return response.data;
   };
 

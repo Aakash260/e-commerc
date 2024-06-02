@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { getAuth } from "@clerk/nextjs/server";
+import Collections from "@/app/(dashboard)/collections/page";
 
 const prisma = new PrismaClient();
 
@@ -10,11 +11,14 @@ export async function POST(req: NextRequest) {
 
     const { userId } = getAuth(req); 
 
-    // if (!userId) {
-    //   return new NextResponse("UnAuthorized userId", { status: 401 });
-    // }
+    if (!userId) {
+      return new NextResponse("UnAuthorized userId", { status: 401 });
+    }
+    
     const data = await req.json();
 console.log(data)
+
+
     const {
       title,
       description,
@@ -27,6 +31,18 @@ console.log(data)
       expense,
       collectionsId 
     } = data;
+
+    const isAlreadyExist = await prisma.products.findFirst({
+      where: {
+        title,
+      },
+    });
+    if (isAlreadyExist) {
+      return new NextResponse(
+        "Product already exist please enter unique title",
+        { status: 400 }
+      );
+    }
 
     if(!title|| !description||!category||!price||!tags||!expense){
         return new NextResponse('missing required fields',{status:401});
@@ -44,9 +60,10 @@ console.log(data)
       colors,
       price,
       expense,
-      collections:{
-        create:collectionsId
-      }
+      collections: {
+        connect: collectionsId.map((id:string) => ({ id })),
+      },
+  
       }
     })
 
@@ -63,11 +80,21 @@ console.log(data)
 }
 
 export async function GET(req: NextRequest) {
-  const allCollections = await prisma.collections.findMany();
-  if (allCollections.length === 0) {
+  const allProducts = await prisma.products.findMany({
+    where: {
+      collectionsId: {
+        isEmpty: false, // Ensure collectionIds array is not empty
+      },
+    },
+    include: {
+      collections: true, // Include the entire related collection
+    },
+  });
+  if (allProducts.length === 0) {
     return new NextResponse("There is no collection in the database", {
       status: 404,
     });
   }
-  return NextResponse.json(allCollections, { status: 200 });
+  return NextResponse.json(allProducts, { status: 200 });
 }
+

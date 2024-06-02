@@ -4,6 +4,7 @@ type CollectionType={
     description:string,
     image:string;
     products:ProductType[];
+    productsId:[string]
 }
 
 type ProductType={

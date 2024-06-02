@@ -16,10 +16,10 @@ export const columns: ColumnDef<CollectionType>[] = [
     {
       accessorKey: "products",
       header: "Products",
-      cell:({row})=><p>{row.original?.products?.length ? row.original.products.length:0}</p>
+      cell:({row})=><p>{row.original?.productsId?.length ? row.original.productsId.length:0}</p>
     },
     {
       id:"actions",
-      cell:({row})=><Delete id={row.original.id}/>
+      cell:({row})=><Delete item="collections" id={row.original.id}/>
     },
   ]

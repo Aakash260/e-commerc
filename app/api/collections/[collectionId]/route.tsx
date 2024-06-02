@@ -60,7 +60,7 @@ export async function POST(req: NextRequest,{params}:{params:{collectionId:strin
       where: {
         id: params.collectionId,
       },
-      data
+      data,
     })
       
     return NextResponse.json(updateUser);

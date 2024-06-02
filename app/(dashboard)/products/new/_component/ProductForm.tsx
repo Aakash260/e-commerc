@@ -25,6 +25,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import Collections from "@/app/(dashboard)/collections/page";
 import MultiSelect from "./MultiSelect";
+
 const formSchema = z.object({
   title: z.string().min(4, {
     message: "Title must be at least 4 characters.",
@@ -64,7 +65,7 @@ export function ProductForm({
 }: {
   initialData?: InitialData | null;
 }) {
-  console.log(initialData?.id);
+  console.log(initialData);
 
   const { toast } = useToast();
 
@@ -113,7 +114,7 @@ export function ProductForm({
       });
 
       console.log("Products created successfully:", data);
-      router.push("/products");
+        router.push("/products");
     },
     onError: (error: ErrorResponse) => {
       toast({
